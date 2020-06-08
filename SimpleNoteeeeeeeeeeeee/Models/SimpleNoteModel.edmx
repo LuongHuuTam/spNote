@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SPNoteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" />
+          <Property Name="Descriptions" Type="nvarchar(max)" />
+          <Property Name="Modified" Type="datetime" />
+          <Property Name="IsTrash" Type="bit" />
+          <Property Name="IsPin" Type="bit" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Tags" />
+          </Key>
+          <Property Name="Tags" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TagNotes">
+          <Key>
+            <PropertyRef Name="Tag_Tags" />
+            <PropertyRef Name="Note_ID" />
+          </Key>
+          <Property Name="Tag_Tags" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Note_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__TagNotes__Note_I__29572725">
+          <End Role="Note" Type="Self.Note" Multiplicity="1" />
+          <End Role="TagNotes" Type="Self.TagNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Note">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TagNotes">
+              <PropertyRef Name="Note_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TagNotes__Tag_Ta__286302EC">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="TagNotes" Type="Self.TagNotes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="Tags" />
+            </Principal>
+            <Dependent Role="TagNotes">
+              <PropertyRef Name="Tag_Tags" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SPNoteModelStoreContainer">
+          <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TagNotes" EntityType="Self.TagNotes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__TagNotes__Note_I__29572725" Association="Self.FK__TagNotes__Note_I__29572725">
+            <End Role="Note" EntitySet="Note" />
+            <End Role="TagNotes" EntitySet="TagNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TagNotes__Tag_Ta__286302EC" Association="Self.FK__TagNotes__Tag_Ta__286302EC">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="TagNotes" EntitySet="TagNotes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SPNoteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Descriptions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Modified" Type="DateTime" Precision="3" />
+          <Property Name="IsTrash" Type="Boolean" />
+          <Property Name="IsPin" Type="Boolean" />
+          <NavigationProperty Name="Tags" Relationship="Self.TagNotes" FromRole="Note" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Tags" />
+          </Key>
+          <Property Name="Tags" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Notes" Relationship="Self.TagNotes" FromRole="Tag" ToRole="Note" />
+        </EntityType>
+        <Association Name="TagNotes">
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="SimpleNoteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Notes" EntityType="Self.Note" />
+          <EntitySet Name="Tags" EntityType="Self.Tag" />
+          <AssociationSet Name="TagNotes" Association="Self.TagNotes">
+            <End Role="Note" EntitySet="Notes" />
+            <End Role="Tag" EntitySet="Tags" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SPNoteModelStoreContainer" CdmEntityContainer="SimpleNoteEntities">
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="SPNoteModel.Note">
+              <MappingFragment StoreEntitySet="Note">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="IsTrash" ColumnName="IsTrash" />
+                <ScalarProperty Name="IsPin" ColumnName="IsPin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="SPNoteModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="TagNotes" TypeName="SPNoteModel.TagNotes" StoreEntitySet="TagNotes">
+            <EndProperty Name="Note">
+              <ScalarProperty Name="ID" ColumnName="Note_ID" />
+            </EndProperty>
+            <EndProperty Name="Tag">
+              <ScalarProperty Name="Tags" ColumnName="Tag_Tags" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
