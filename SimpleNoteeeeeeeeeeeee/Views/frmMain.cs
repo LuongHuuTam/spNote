@@ -97,7 +97,8 @@ namespace SimpleNoteeeeeeeeeeeee.Views
             Note ln = NoteControllers.getNote("New Note");
             if (ln != null)
             {
-                MessageBox.Show("New note has been created.\nUse before creating a new one", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("New note has been created.\nUse before creating a new one", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             Note note = new Note();
@@ -164,21 +165,15 @@ namespace SimpleNoteeeeeeeeeeeee.Views
             loadNote();
         }
         private void btnDelete_Click(object sender, EventArgs e)
-        {            
+        {
             if (flag)
             {
                 Note note = NoteControllers.getNote(listViewNote.SelectedItems[0].SubItems[1].Text);
-                if (note.Title == "New Note" && note.Descriptions.Length == 0)
-                {
-                    NoteControllers.deleteNote(note);
-                    loadNote();
-                }
-                else
-                {
-                    note.IsTrash = true;
-                    NoteControllers.updateNote(note);
-                    loadNote();
-                }
+
+                note.IsTrash = true;
+                NoteControllers.updateNote(note);
+                loadNote();
+
             }
             else
             {
@@ -195,7 +190,9 @@ namespace SimpleNoteeeeeeeeeeeee.Views
                 string[] arr = note.Descriptions.Split(' ');
                 string[] arr1 = note.Descriptions.Split('\n');
                 int a = arr.Count() + arr1.Count() - 1;
-                MessageBox.Show(note.Descriptions.Length + "character\n" + a + "words\n" + "Modified: " + note.Modified.Value.ToString() + "\nPin to top: " + note.IsPin.Value, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(note.Descriptions.Length + "character\n" + a + "words\n" + "Modified: "
+                    + note.Modified.Value.ToString() + "\nPin to top: " + note.IsPin.Value, "Info", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -290,7 +287,8 @@ namespace SimpleNoteeeeeeeeeeeee.Views
                 Note ln = NoteControllers.getNote("New Note");
                 if (ln != null)
                 {
-                    MessageBox.Show("New note has been created.\nUse before creating a new one", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("New note has been created.\nUse before creating a new one", "Warning",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 Note note = new Note();

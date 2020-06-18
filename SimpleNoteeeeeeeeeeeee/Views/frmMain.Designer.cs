@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.btnMode = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -54,6 +55,9 @@
             this.newNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tagToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -314,6 +318,7 @@
             this.tbTitle.Name = "tbTitle";
             this.tbTitle.Size = new System.Drawing.Size(549, 26);
             this.tbTitle.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.tbTitle, "Title");
             // 
             // rtbNote
             // 
@@ -324,6 +329,7 @@
             this.rtbNote.Size = new System.Drawing.Size(549, 302);
             this.rtbNote.TabIndex = 1;
             this.rtbNote.Text = "";
+            this.toolTip2.SetToolTip(this.rtbNote, "Description");
             // 
             // tbTag
             // 
@@ -334,6 +340,7 @@
             this.tbTag.Name = "tbTag";
             this.tbTag.Size = new System.Drawing.Size(549, 25);
             this.tbTag.TabIndex = 0;
+            this.toolTip3.SetToolTip(this.tbTag, "Tag");
             // 
             // menuStrip1
             // 
@@ -358,14 +365,14 @@
             // newNoteToolStripMenuItem
             // 
             this.newNoteToolStripMenuItem.Name = "newNoteToolStripMenuItem";
-            this.newNoteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newNoteToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.newNoteToolStripMenuItem.Text = "New Note";
             this.newNoteToolStripMenuItem.Click += new System.EventHandler(this.newNoteToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -440,5 +447,8 @@
         private System.Windows.Forms.RadioButton radioTag;
         private System.Windows.Forms.RadioButton radioTitle;
         private System.Windows.Forms.ToolStripMenuItem tagToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip toolTip2;
+        private System.Windows.Forms.ToolTip toolTip3;
     }
 }
